@@ -1,0 +1,43 @@
+in:
+  type: s3
+  bucket: {{ env.IN_S3_BUCKET }}
+  path_prefix: {{ env.IN_S3_PREFIX }}
+  auth_method: instance
+  decoders:
+  - {type: gzip}
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: csv
+    delimiter: "\t"
+    quote: ''
+    escape: ''
+    skip_header_lines: 2
+    columns:
+    - {name: date, type: string}
+    - {name: time, type: string}
+    - {name: edge_location, type: string}
+    - {name: sc_bytes, type: long}
+    - {name: c_ip, type: string}
+    - {name: cs_method, type: string}
+    - {name: cs_host, type: string}
+    - {name: cs_uri_stem, type: string}
+    - {name: sc_status, type: string}
+    - {name: cs_referer, type: string}
+    - {name: cs_user_agent, type: string}
+    - {name: cs_uri_query, type: string}
+    - {name: cs_cookie, type: string}
+    - {name: edge_result_type, type: string}
+    - {name: edge_result_id, type: string}
+    - {name: host_header, type: string}
+    - {name: cs_protocol, type: string}
+    - {name: cs_bytes, type: long}
+    - {name: time_taken, type: double}
+    - {name: x_forwarded_for, type: string}
+    - {name: ssl_protocol, type: string}
+    - {name: ssl_cipher, type: string}
+    - {name: x_edge_response_result_type, type: string}
+    - {name: cs_protocol_version, type: string}
+out:
+  type: parquet
+  path_prefix: s3a://{{ env.OUT_S3_BUCKET }}/{{ env.OUT_S3_PREFIX }}
