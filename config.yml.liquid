@@ -2,7 +2,7 @@ in:
   type: s3
   bucket: {{ env.IN_S3_BUCKET }}
   path_prefix: {{ env.IN_S3_PREFIX }}
-  auth_method: instance
+  auth_method: default
   decoders:
   - {type: gzip}
   parser:
